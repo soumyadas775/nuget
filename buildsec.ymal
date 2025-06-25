@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 6.0
+    commands:
+      - echo Getting AWS CodeArtifact token...
+      - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ngeapi-dev --domain-owner 738621197876 --query authorizationToken --output text)
+  build:
+    commands:
+      - echo Restoring .NET solution...
+      - dotnet restore
+      - echo Building .NET project...
+      - dotnet build -c Release
+      - echo Packing NuGet package...
+      - dotnet pack Source/NextGen.Api.Event.Common/NextGen.Api.Event.Common.csproj -c Release -o output
+  post_build:
+    commands:
+      - echo Publishing NuGet package to AWS CodeArtifact...
+      - dotnet nuget push output/*.nupkg \
+        --source "https://ngeapi-dev-738621197876.d.codeartifact.us-east-1.amazonaws.com/nuget/ngeapi-dev-Default/" \
+        --api-key $CODEARTIFACT_AUTH_TOKEN
+
+artifacts:
+  files:
+    - output/*.nupkg
