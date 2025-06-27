@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework> <!-- or net7.0 -->
+    <AssemblyName>lib-event-common</AssemblyName>
+    <Version>1.0.0</Version>
+    <Authors>YourCompanyName</Authors>
+    <PackageId>lib-event-common</PackageId>
+    <Description>Combined EDA libraries: Common, Producer, Consumer, Manager</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\**\*.cs" />
+  </ItemGroup>
+
+</Project>
