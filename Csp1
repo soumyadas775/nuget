@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Target .NET version -->
+    <TargetFramework>net6.0</TargetFramework>
+
+    <!-- NuGet package identity -->
+    <PackageId>lib-event-common</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>YourCompany</Authors>
+    <Company>YourCompany</Company>
+
+    <!-- Display info on NuGet / CodeArtifact -->
+    <Description>Combined EDA libraries (Common, Producer, Consumer, Manager)</Description>
+    <PackageTags>eda;event-driven;microservices;nuget</PackageTags>
+
+    <!-- Repository metadata -->
+    <RepositoryUrl>https://bitbucket.org/your-team/lib-event-common.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://bitbucket.org/your-team/lib-event-common</PackageProjectUrl>
+
+    <!-- License (change if needed) -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <!-- Auto-pack on build & ship symbols/source -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Pull in all C# code under src/ recursively -->
+    <Compile Include="src\**\*.cs" />
+  </ItemGroup>
+
+</Project>
