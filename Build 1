@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 6.0
+    commands:
+      - echo "Restoring packages..."
+      - dotnet restore
+
+  build:
+    commands:
+      - echo "Building & packing..."
+      - dotnet pack -c Release -o output
+
+  post_build:
+    commands:
+      # Auth token for CodeArtifact
+      - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
+          --domain your-domain \
+          --domain-owner 123456789012 \
+          --query authorizationToken \
+          --output text)
+      - echo "Pushing to CodeArtifact..."
+      - dotnet nuget push output/*.nupkg \
+          --source "https://your-domain-123456789012.d.codeartifact.us-east-1.amazonaws.com/nuget/your-repo/" \
+          --api-key $CODEARTIFACT_AUTH_TOKEN
+artifacts:
+  files:
+    - output/**/*.nupkg
